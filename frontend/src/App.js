@@ -191,6 +191,7 @@ function App() {
     }
 
     div.innerHTML = str
+    div.innerHTML += '&nbsp;'
   }
 
   return (
