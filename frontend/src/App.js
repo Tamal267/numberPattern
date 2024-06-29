@@ -245,7 +245,8 @@ function App() {
       >
         <div>Sample Case: </div>
         <div>10djfkjd2434.34rkjf33</div>
-        <div>24kjdf343 394E23kjf 3.45E12 </div>
+        <div>24kjdf343 394E23kjf 3.45E12</div>
+        <div>242. 35E 23.56E-</div>
       </div>
       <br />
       <button onClick={colorNumbers}>Get Numbers</button>
