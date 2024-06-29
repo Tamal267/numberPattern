@@ -5,6 +5,8 @@ import tranDg from './img/tdg.png'
 function App() {
   const editableDivRef = useRef(null)
 
+  let numLine = ''
+
   const colorNumbers = () => {
     const div = editableDivRef.current
     if (!div) return
@@ -12,18 +14,24 @@ function App() {
     let text = div.innerHTML
       .replace(/<\/?span[^>]*>/g, '')
       .replace(/&nbsp;/g, '')
+      .replace(/<div[^>]*>/g, '')
+      .replace(/<\/div[^>]*>/g, '<br>')
 
-    text = text.split('\n')
+    console.log('intital string: ', text)
+
+    text = text.split('<br>')
     let str = ''
 
     let line = 0,
       state = 0,
-      isNewLn = 0
+      spanLen = `<span style="color: blue;"></span>`.length
 
     for (let s of text) {
       line++
       let i = 0,
+        cntNum = 0,
         pos = 0
+      console.log(s, ' string')
       while (i < s.length) {
         if (i === s.length - 1 && '0123456789'.indexOf(s[i]) !== -1) {
           let num = ''
@@ -31,9 +39,17 @@ function App() {
             num += s[j]
           }
           s = s.slice(0, pos) + `<span style="color: blue;">${num}</span>`
-          console.log('Line ', line, ' Column ', pos + 1, ': ', num)
-          i = i + `<span style="color: blue;"></span>`.length
+          console.log(
+            'Line ',
+            line,
+            ' Column ',
+            pos + 1 - cntNum * spanLen,
+            ': ',
+            num,
+          )
+          i = i + spanLen
           pos = i
+          cntNum++
           state = 0
           break
         }
@@ -63,9 +79,17 @@ function App() {
                 s.slice(0, pos) +
                 `<span style="color: blue;">${num}</span>` +
                 s.slice(i)
-              console.log('Line ', line, ' Column ', pos + 1, ': ', num)
-              i = i + `<span style="color: blue;"></span>`.length
+              console.log(
+                'Line ',
+                line,
+                ' Column ',
+                pos + 1 - cntNum * spanLen,
+                ': ',
+                num,
+              )
+              i = i + spanLen
               pos = i
+              cntNum++
               state = 0
             }
             i++
@@ -84,9 +108,17 @@ function App() {
                 s.slice(0, pos) +
                 `<span style="color: blue;">${num}</span>` +
                 s.slice(i)
-              console.log('Line ', line, ' Column ', pos + 1, ': ', num)
-              i = i + `<span style="color: blue;"></span>`.length
+              console.log(
+                'Line ',
+                line,
+                ' Column ',
+                pos + 1 - cntNum * spanLen,
+                ': ',
+                num,
+              )
+              i = i + spanLen
               pos = i
+              cntNum++
               state = 0
             }
             i++
@@ -106,9 +138,18 @@ function App() {
                 s.slice(0, pos) +
                 `<span style="color: blue;">${num}</span>` +
                 s.slice(i)
-              console.log('Line ', line, ' Column ', pos + 1, ': ', num)
-              i = i + `<span style="color: blue;"></span>`.length
+              console.log(
+                'Line ',
+                line,
+                ' Column ',
+                pos + 1 - cntNum * spanLen,
+                ': ',
+                num,
+              )
+
+              i = i + spanLen
               pos = i
+              cntNum++
               state = 0
             }
             i++
@@ -129,9 +170,17 @@ function App() {
                 s.slice(0, pos) +
                 `<span style="color: blue;">${num}</span>` +
                 s.slice(i)
-              console.log('Line ', line, ' Column ', pos + 1, ': ', num)
-              i = i + `<span style="color: blue;"></span>`.length
+              console.log(
+                'Line ',
+                line,
+                ' Column ',
+                pos + 1 - cntNum * spanLen,
+                ': ',
+                num,
+              )
+              i = i + spanLen
               pos = i
+              cntNum++
               state = 0
             }
             i++
@@ -150,9 +199,17 @@ function App() {
                 s.slice(0, pos) +
                 `<span style="color: blue;">${num}</span>` +
                 s.slice(i)
-              console.log('Line ', line, ' Column ', pos + 1, ': ', num)
-              i = i + `<span style="color: blue;"></span>`.length
+              console.log(
+                'Line ',
+                line,
+                ' Column ',
+                pos + 1 - cntNum * spanLen,
+                ': ',
+                num,
+              )
+              i = i + spanLen
               pos = i
+              cntNum++
               state = 0
             }
             i++
@@ -170,9 +227,17 @@ function App() {
                 s.slice(0, pos) +
                 `<span style="color: blue;">${num}</span>` +
                 s.slice(i)
-              console.log('Line ', line, ' Column ', pos + 1, ': ', num)
-              i = i + `<span style="color: blue;"></span>`.length
+              console.log(
+                'Line ',
+                line,
+                ' Column ',
+                pos + 1 - cntNum * spanLen,
+                ': ',
+                num,
+              )
+              i = i + spanLen
               pos = i
+              cntNum++
               state = 0
             }
             i++
@@ -185,12 +250,7 @@ function App() {
         }
       }
 
-      if (isNewLn) {
-        str += '\n'
-      } else {
-        isNewLn = 1
-      }
-      str += s
+      str += '<div>' + s + '</div>'
     }
 
     console.log(str, '...')
@@ -211,12 +271,13 @@ function App() {
         contentEditable="true"
         className="textbox"
       >
-        Sample Case: <br />
-        10djfkjd2434.34rkjf33 <br />
-        24kjdf343 394E23kjf 3.45E12
+        <div>Sample Case: </div>
+        <div>10djfkjd2434.34rkjf33 </div>
+        <div>24kjdf343 394E23kjf 3.45E12</div>
       </div>
       <br />
       <button onClick={colorNumbers}>Get Numbers</button>
+      <br />
     </div>
   )
 }
