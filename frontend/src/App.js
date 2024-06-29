@@ -15,8 +15,6 @@ function App() {
       .replace(/<div[^>]*>/g, '')
       .replace(/<\/div[^>]*>/g, '<br>')
 
-    console.log('intital string: ', text)
-
     text = text.split('<br>')
     let str = ''
 
@@ -29,28 +27,8 @@ function App() {
       let i = 0,
         cntNum = 0,
         pos = 0
+      s += '$'
       while (i < s.length) {
-        if (i === s.length - 1 && '0123456789'.indexOf(s[i]) !== -1) {
-          let num = ''
-          for (let j = pos; j <= i; j++) {
-            num += s[j]
-          }
-          s = s.slice(0, pos) + `<span style="color: blue;">${num}</span>`
-          console.log(
-            'Line ',
-            line,
-            ' Column ',
-            pos + 1 - cntNum * spanLen,
-            ': ',
-            num,
-          )
-          i = i + spanLen
-          pos = i
-          cntNum++
-          state = 0
-          break
-        }
-
         switch (state) {
           case 0: {
             if ('0123456789'.indexOf(s[i]) !== -1) {
@@ -247,13 +225,10 @@ function App() {
         }
       }
 
-      str += '<div>' + s + '</div>'
+      str += '<div>' + s.slice(0, s.length - 2) + '</div>'
     }
 
-    console.log(str, '...')
-
     div.innerHTML = str
-    div.innerHTML += '&nbsp;'
   }
 
   return (
@@ -269,8 +244,8 @@ function App() {
         className="textbox"
       >
         <div>Sample Case: </div>
-        <div>10djfkjd2434.34rkjf33 </div>
-        <div>24kjdf343 394E23kjf 3.45E12</div>
+        <div>10djfkjd2434.34rkjf33</div>
+        <div>24kjdf343 394E23kjf 3.45E12 </div>
       </div>
       <br />
       <button onClick={colorNumbers}>Get Numbers</button>
