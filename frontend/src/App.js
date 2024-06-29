@@ -10,6 +10,9 @@ function App() {
     if (!div) return
 
     let text = div.innerHTML
+      .replace(/<\/?span[^>]*>/g, '')
+      .replace(/&nbsp;/g, '')
+
     text = text.split('\n')
     let str = ''
 
@@ -181,7 +184,7 @@ function App() {
           }
         }
       }
-      console.log(s)
+
       if (isNewLn) {
         str += '\n'
       } else {
@@ -189,6 +192,8 @@ function App() {
       }
       str += s
     }
+
+    console.log(str, '...')
 
     div.innerHTML = str
     div.innerHTML += '&nbsp;'
