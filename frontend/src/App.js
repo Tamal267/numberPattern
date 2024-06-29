@@ -5,8 +5,6 @@ import tranDg from './img/tdg.png'
 function App() {
   const editableDivRef = useRef(null)
 
-  let numLine = ''
-
   const colorNumbers = () => {
     const div = editableDivRef.current
     if (!div) return
@@ -31,7 +29,6 @@ function App() {
       let i = 0,
         cntNum = 0,
         pos = 0
-      console.log(s, ' string')
       while (i < s.length) {
         if (i === s.length - 1 && '0123456789'.indexOf(s[i]) !== -1) {
           let num = ''
